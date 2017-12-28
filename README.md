@@ -1,10 +1,10 @@
 # ThreadScenarioDemo
 
-使用
+使用 Async 帮你解决常见的线程问题 🤖
 
-> TableView 应该是项目开发中最常用的部件了，如果你感觉系统的原生方式语法较为‘冗余’，那款三方库一定很适合你。
+> 线程这种东西不是那么经常用得到，但是却很微观，很考察计算机基础功力。
 
-![](http://og1yl0w9z.bkt.clouddn.com/17-12-18/79869793.jpg)
+![](http://og1yl0w9z.bkt.clouddn.com/17-12-28/9840843.jpg)
 
 ![](https://img.shields.io/badge/platform-iOS-red.svg) ![](https://img.shields.io/badge/language-Swift-blue.svg) ![](https://img.shields.io/badge/download-9.9MB-yellow.svg) ![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) 
 
