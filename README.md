@@ -20,8 +20,8 @@
 
 | 名称 |1.展示页 |2.展示页 |3.展示页 |
 | ------------- | ------------- | ------------- | ------------- | 
-| 截图 | ![](http://og1yl0w9z.bkt.clouddn.com/17-12-18/65224594.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-12-18/23991764.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-12-18/81987650.jpg) | 
-| 描述 | 日期选择 | 主题切换 | 选项卡切换 | 
+| 截图 | ![](http://og1yl0w9z.bkt.clouddn.com/17-12-28/34766543.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-12-28/73471370.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/17-12-28/88055563.jpg) | 
+| 描述 | 常见场景列表 | 耗时操作场景示例 | 黑科技操作场景示例 | 
 
 
 ### 🎯 安装方法
@@ -34,190 +34,77 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 use_frameworks!
 
-pod 'Eureka'
+pod 'AsyncSwift'
 ```
-
-#### 其他操作
-
-另外还需要在Target->工程名->Build Settings->Search Paths->User Header Search Paths处添加Eureka所在的目录：
-
-![](http://og1yl0w9z.bkt.clouddn.com/17-12-18/68332908.jpg)
-
 
 
 ### 🛠 配置
 
 #### 创建表单
 
-下面来创建一个最简单的表单，表单只包含一个区域和一行，点击该行可以切换到其它页面
+*1.耗时操作*
 
+这是应用最广泛的场景，为了避免阻塞主线程，将耗时操作放在子线程处理，然后在主线程使用处理结果。比如读取沙盒中的一些数据，然后将读取的数据展示在 UI，这个场景还有几个细分：
+1.1 执行一个耗时操作后回调主线程
 ```Swift
-import UIKit
-import Eureka
+Async.background {
+print("A: This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
+    sleep(2)
+}.main {
+    print("B: This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
+}
+```
+1.2 串行耗时操作
 
-//ViewController继承于FormViewController
-class MyViewController: FormViewController {
+每一段子任务依赖上一个任务完成，全部完成后回调主线程：
+```Swift
+let backgroundBlock = Async.background {
+    print("This is run on the first\(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
+    sleep(2)
+    
+    print("This is run on the second \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
+    sleep(2)
+}
+// Run other code here...
+backgroundBlock.main {
+    print("This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
+}
+```
+1.3 并发耗时操作
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        //表单form增加一个Section区域，区域名为First form
-        form +++ Section("First form")
-
-            //在区域中添加一个ButtonRow（ButtonRow为点击直接触发事件的行），行tag为Rows
-            <<< ButtonRow("Rows"){
-                //设置行标题为行tag
-                $0.title = $0.tag
-                //设置点击事件，执行名为"Main"的Segue（需在Interface Builder中自定义）
-                $0.presentationMode = .SegueName(segueName: "Main", completionCallback: nil)
-        }
-              //自定义Row，在后面会讲到
-//            <<< WeekDayRow(){
-//                $0.value = [.Monday, .Wednesday, .Friday]
-//        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+每一段子任务独立，所有子任务完成后回调主线程：
+```Swift
+Async.main {
+    print("This is run on the \(qos_class_self().description) (expected \(qos_class_main().description))")
+    // Prints: "This is run on the Main (expected Main) count: 1 (expected 1)"
+    }.userInteractive {
+        print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INTERACTIVE.description))")
+        // Prints: "This is run on the Main (expected Main) count: 2 (expected 2)"
+    }.userInitiated {
+        print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INITIATED.description)) ")
+        // Prints: "This is run on the User Initiated (expected User Initiated) count: 3 (expected 3)"
+    }.utility {
+        print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_UTILITY.description)) ")
+        // Prints: "This is run on the Utility (expected Utility) count: 4 (expected 4)"
+    }.background {
+        print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description)) ")
+        // Prints: "This is run on the User Interactive (expected User Interactive) count: 5 (expected 5)"
 }
 ```
 
-#### 自定义Row
+*2.延时执行*
 
-除了使用框架自带的Row，还可以根据自己的需求自定义Row，下面以一个星期选择行为例。首先创建类WeekDayRow.Swift和nib文件WeekDaysCell.xib。
-
+延时一段时间后执行代码，一般见于打开 App 一段时间后，弹出求好评对话框。
 ```Swift
-import Foundation
-import UIKit
-import MapKit
-import Eureka
-
-
-//MARK: WeeklyDayCell
-
-public enum WeekDay{
-    case Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-}
-
-public class WeekDayCell : Cell<Set<WeekDay>>, CellType{
-
-    //与nib中的7个按钮建立链接
-    @IBOutlet var sundayButton: UIButton!
-    @IBOutlet var mondayButton: UIButton!
-    @IBOutlet var tuesdayButton: UIButton!
-    @IBOutlet var wednesdayButton: UIButton!
-    @IBOutlet var thursdayButton: UIButton!
-    @IBOutlet var fridayButton: UIButton!
-    @IBOutlet var saturdayButton: UIButton!
-
-    //重写cell创建方法
-    public override func setup() {
-        height = {60}
-        row.title = nil
-        super.setup()
-        selectionStyle = .None
-
-        for subviews in contentView.subviews{
-            if let button = subviews as? UIButton{
-                //为每个按钮设置选中和未选中时的图片
-                button.setImage(UIImage(named: "check.png"), forState: .Selected)
-                button.setImage(UIImage(named: "uncheck.png"), forState: .Normal)
-                //默认情况下，按钮在被禁用时，图像会被画的颜色淡一些，设置为false是禁止此功能
-                button.adjustsImageWhenDisabled = false
-                //自定义函数，设置按钮标签与图片的位置
-                imageTopTittle(button)
-            }
-        }
-    }
-
-    //重写cell更新方法
-    public override func update() {
-        row.title = nil
-        super.update()
-        let value = row.value
-        //根据value是否包含某枚举值来设置对应按钮的选中状态
-        mondayButton.selected = value?.contains(.Monday) ?? false
-        tuesdayButton.selected = value?.contains(.Tuesday) ?? false
-        wednesdayButton.selected = value?.contains(.Wednesday) ?? false
-        thursdayButton.selected = value?.contains(.Thursday) ?? false
-        fridayButton.selected = value?.contains(.Friday) ?? false
-        saturdayButton.selected = value?.contains(.Saturday) ?? false
-        sundayButton.selected = value?.contains(.Sunday) ?? false
-
-        //设置按钮在不同状态下的透明度
-        mondayButton.alpha = row.isDisabled ? 0.6 : 1.0
-        tuesdayButton.alpha = mondayButton.alpha
-        wednesdayButton.alpha = mondayButton.alpha
-        thursdayButton.alpha = mondayButton.alpha
-        fridayButton.alpha = mondayButton.alpha
-        saturdayButton.alpha = mondayButton.alpha
-        sundayButton.alpha = mondayButton.alpha
-    }
-
-    //每个按钮的点击事件
-    @IBAction func dayTapped(sender : UIButton){
-        dayTapped(sender, day: getDayFromButton(sender))
-    }
-
-    //根据点击的按钮返回对应的枚举值
-    private func getDayFromButton(button : UIButton) -> WeekDay{
-        switch button{
-        case sundayButton:
-            return .Sunday
-        case mondayButton:
-            return .Monday
-        case tuesdayButton:
-            return .Tuesday
-        case wednesdayButton:
-            return .Wednesday
-        case thursdayButton:
-            return .Thursday
-        case fridayButton:
-            return .Friday
-        default:
-            return .Saturday
-        }
-    }
-
-    //点击改变按钮的选中状态，并从value中插入或删除对应的枚举值
-    private func dayTapped(button : UIButton, day:WeekDay){
-        button.selected = !button.selected
-        if button.selected {
-            row.value?.insert(day)
-        }
-        else{
-            row.value?.remove(day)
-        }
-    }
-
-    //设置按钮标题和图片的位置
-    private func imageTopTittle(button : UIButton){
-        guard let imageSize = button.imageView?.image?.size else{ return }
-        let spacing : CGFloat = 3.0
-        button.titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, -(imageSize.height + spacing), 0.0)
-        guard let titleLabel = button.titleLabel, let title = titleLabel.text else{ return }
-        let titleSize = title.sizeWithAttributes([NSFontAttributeName: titleLabel.font])
-        button.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + spacing), 0, 0, -titleSize.width)
-    }
-}
-
-//MARK: WeekDayRow
-
-public final class WeekDayRow: Row<Set<WeekDay>, WeekDayCell>, RowType{
-    //重写init方法
-    required public init(tag: String?) {
-        super.init(tag: tag)
-        displayValueFor = nil
-        cellProvider = CellProvider<WeekDayCell>(nibName: "WeekDaysCell")
-    }
+let seconds = 3.0
+Async.main(after: seconds) {
+    print("Is called after 3 seconds")
+}.background(after: 6.0) {
+    print("At least 3.0 seconds after previous block, and 6.0 after Async code is called")
 }
 ```
 
-### 📝 深入学习
-
-这里列出了Eureka最基本的操作，Eureka还有更多丰富的功能，如果想要深入学习Eureka，可以前往GitHub-Eureka主页！
-
+其他用法请见 Demo。
 
 ### ⚖ 协议
 
