@@ -4,7 +4,7 @@
 
 > 线程这种东西不是那么经常用得到，但是却很微观，很考察计算机基础功力。
 
-![](http://og1yl0w9z.bkt.clouddn.com/17-12-28/9840843.jpg)
+![](http://og1yl0w9z.bkt.clouddn.com/17-12-28/7998417.jpg)
 
 ![](https://img.shields.io/badge/platform-iOS-red.svg) ![](https://img.shields.io/badge/language-Swift-blue.svg) ![](https://img.shields.io/badge/download-9.9MB-yellow.svg) ![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) 
 
