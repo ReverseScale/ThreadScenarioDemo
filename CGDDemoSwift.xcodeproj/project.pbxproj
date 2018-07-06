@@ -186,7 +186,6 @@
 				34E72AEF1FEB4A2F00AA0E85 /* Frameworks */,
 				34E72AF01FEB4A2F00AA0E85 /* Resources */,
 				682539F13C5F837FAA2205C2 /* [CP] Embed Pods Frameworks */,
-				7E31AC933B65DC81999E3FDA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -205,8 +204,6 @@
 				34E72B021FEB4A3000AA0E85 /* Sources */,
 				34E72B031FEB4A3000AA0E85 /* Frameworks */,
 				34E72B041FEB4A3000AA0E85 /* Resources */,
-				ADE761CCE47A49D8BBA31663 /* [CP] Embed Pods Frameworks */,
-				7B2C7F11EC77F3EC145C3DF3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -226,8 +223,6 @@
 				34E72B0D1FEB4A3000AA0E85 /* Sources */,
 				34E72B0E1FEB4A3000AA0E85 /* Frameworks */,
 				34E72B0F1FEB4A3000AA0E85 /* Resources */,
-				82099CF77B84683C913DD9E3 /* [CP] Embed Pods Frameworks */,
-				41AF197AA33563EE19AE4109 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -314,21 +309,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		41AF197AA33563EE19AE4109 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CGDDemoSwiftUITests/Pods-CGDDemoSwiftUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		682539F13C5F837FAA2205C2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,51 +325,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CGDDemoSwift/Pods-CGDDemoSwift-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7B2C7F11EC77F3EC145C3DF3 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CGDDemoSwiftTests/Pods-CGDDemoSwiftTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7E31AC933B65DC81999E3FDA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CGDDemoSwift/Pods-CGDDemoSwift-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		82099CF77B84683C913DD9E3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CGDDemoSwiftUITests/Pods-CGDDemoSwiftUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		825FCF13515C638F4FC78D40 /* [CP] Check Pods Manifest.lock */ = {
@@ -444,21 +379,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ADE761CCE47A49D8BBA31663 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CGDDemoSwiftTests/Pods-CGDDemoSwiftTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

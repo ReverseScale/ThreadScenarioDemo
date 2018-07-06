@@ -40,8 +40,8 @@ class ScenarioViewController: UIViewController {
         Async.background {
             print("A: This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
             sleep(2)
-            }.main {
-                print("B: This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
+        }.main {
+            print("B: This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
         }
         // ----------- 替换如下方法
         //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
@@ -55,36 +55,56 @@ class ScenarioViewController: UIViewController {
     open func timeConsumingAsyncParallel() {
         // 串行耗时操作
         let backgroundBlock = Async.background {
-            print("This is run on the first\(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
+            print("1.This is run on the first\(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
             sleep(2)
             
-            print("This is run on the second \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
+            print("2.This is run on the second \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
             sleep(2)
         }
         
         // Run other code here...
         backgroundBlock.main {
-            print("This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
+            print("3.This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
         }
     }
     open func timeConsumingAsyncSeries() {
-        // 并发耗时操作
-        Async.main {
-            print("This is run on the \(qos_class_self().description) (expected \(qos_class_main().description))")
-            // Prints: "This is run on the Main (expected Main) count: 1 (expected 1)"
-            }.userInteractive {
-                print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INTERACTIVE.description))")
-                // Prints: "This is run on the Main (expected Main) count: 2 (expected 2)"
-            }.userInitiated {
-                print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INITIATED.description)) ")
-                // Prints: "This is run on the User Initiated (expected User Initiated) count: 3 (expected 3)"
-            }.utility {
-                print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_UTILITY.description)) ")
-                // Prints: "This is run on the Utility (expected Utility) count: 4 (expected 4)"
-            }.background {
-                print("This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description)) ")
-                // Prints: "This is run on the User Interactive (expected User Interactive) count: 5 (expected 5)"
+        // 普通多线程加载
+        let group = AsyncGroup()
+        group.background {
+            print("This is run on the background queue")
         }
+        group.background {
+            print("This is also run on the background queue in parallel")
+        }
+        group.wait()
+        print("Both asynchronous blocks are complete")
+        
+        // 自定义多线程加载
+//        // 并发耗时操作
+//        Async.main {
+//            sleep(4)
+//            print("1.This is run on the \(qos_class_self().description) (expected \(qos_class_main().description))")
+//            // Prints: "This is run on the Main (expected Main) count: 1 (expected 1)"
+//        }.userInteractive {
+//            print("2.1.This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INTERACTIVE.description))")
+//            print("2.2.This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INTERACTIVE.description))")
+//
+//            // Prints: "This is run on the Main (expected Main) count: 2 (expected 2)"
+//        }.userInitiated {
+//            sleep(1)
+//            print("3.1.This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INITIATED.description)) ")
+//            print("3.2.This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_USER_INITIATED.description)) ")
+//
+//            // Prints: "This is run on the User Initiated (expected User Initiated) count: 3 (expected 3)"
+//        }.utility {
+//            sleep(7)
+//            print("4.This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_UTILITY.description)) ")
+//            // Prints: "This is run on the Utility (expected Utility) count: 4 (expected 4)"
+//        }.background {
+//            sleep(4)
+//            print("5.This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description)) ")
+//            // Prints: "This is run on the User Interactive (expected User Interactive) count: 5 (expected 5)"
+//        }
     }
     
     open func delayedAsync() {
@@ -92,8 +112,8 @@ class ScenarioViewController: UIViewController {
         let seconds = 3.0
         Async.main(after: seconds) {
             print("Is called after 3 seconds")
-            }.background(after: 6.0) {
-                print("At least 3.0 seconds after previous block, and 6.0 after Async code is called")
+        }.background(after: 6.0) {
+            print("At least 3.0 seconds after previous block, and 6.0 after Async code is called")
         }
     }
     
@@ -103,8 +123,8 @@ class ScenarioViewController: UIViewController {
         let otherCustomQueue = DispatchQueue(label: "OtherCustomQueueLabel")
         Async.custom(queue: customQueue) {
             print("Custom queue")
-            }.custom(queue: otherCustomQueue) {
-                print("Other custom queue")
+        }.custom(queue: otherCustomQueue) {
+            print("Other custom queue")
         }
     }
     
