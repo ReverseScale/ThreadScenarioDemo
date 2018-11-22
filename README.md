@@ -6,7 +6,7 @@
 
 Use Async to help you solve common threading issues 🤖
 
-![](http://og1yl0w9z.bkt.clouddn.com/17-12-28/7998417.jpg)
+![](https://user-gold-cdn.xitu.io/2018/3/12/1621845a78601b8d?w=637&h=379&f=png&s=267470)
 
 > This kind of threading is not used so often, but it is very microscopic, and it examines the basic skills of the computer.
 
@@ -22,7 +22,7 @@ Use Async to help you solve common threading issues 🤖
 
 |1.Presentation page | 2.Presentation page | 3.Presentation page |
 | ------------- | ------------- | ------------- | 
-| ![](http://og1yl0w9z.bkt.clouddn.com/18-3-15/34884761.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/18-3-15/77175469.jpg) | ![](http://og1yl0w9z.bkt.clouddn.com/18-3-15/60412728.jpg) | 
+| ![](https://user-gold-cdn.xitu.io/2018/3/15/16227c294d4ada05?w=358&h=704&f=png&s=60908) | ![](https://user-gold-cdn.xitu.io/2018/3/15/16227c2952da907c?w=358&h=704&f=png&s=45074) | ![](https://user-gold-cdn.xitu.io/2018/3/15/16227c2951fdff08?w=358&h=704&f=png&s=38121) | 
 | Common Scene Lists | Time-Sample Operation Scenario Examples | Black Technology Operation Scenarios Example |
 
 ----
