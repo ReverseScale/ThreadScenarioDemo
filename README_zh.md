@@ -12,14 +12,14 @@
 ![](https://user-gold-cdn.xitu.io/2018/3/12/1621845a78601b8d?w=637&h=379&f=png&s=267470)
 
 ----
-### 🤖 要求
+## 🤖 要求
 
 * iOS 9.0+
 * Xcode 9.0+
 * Swift 4
 
 ----
-### 🎨 测试 UI 什么样子？
+## 🎨 测试 UI 什么样子？
 
 |1.展示页 |2.展示页 |3.展示页 |
 | ------------- | ------------- | ------------- | 
@@ -27,9 +27,9 @@
 | 常见场景列表 | 耗时操作场景示例 | 黑科技操作场景示例 | 
 
 ----
-### 🎯 安装方法
+## 🎯 安装方法
 
-#### 安装
+### 安装
 
 在 *iOS*, 你需要在 Podfile 中添加.
 ```
@@ -41,15 +41,15 @@ pod 'AsyncSwift'
 ```
 
 ----
-### 🛠 配置
+## 🛠 配置
 
-#### 创建表单
+### 创建表单
 
-##### 1.耗时操作
+#### 1.耗时操作
 
 这是应用最广泛的场景，为了避免阻塞主线程，将耗时操作放在子线程处理，然后在主线程使用处理结果。比如读取沙盒中的一些数据，然后将读取的数据展示在 UI，这个场景还有几个细分：
 
-##### 1.1 执行一个耗时操作后回调主线程*
+#### 1.1 执行一个耗时操作后回调主线程*
 ```Swift
 Async.background {
 print("A: This is run on the \(qos_class_self().description) (expected \(QOS_CLASS_BACKGROUND.description))")
@@ -58,7 +58,7 @@ print("A: This is run on the \(qos_class_self().description) (expected \(QOS_CLA
     print("B: This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
 }
 ```
-##### 1.2 串行耗时操作*
+#### 1.2 串行耗时操作*
 
 每一段子任务依赖上一个任务完成，全部完成后回调主线程：
 ```Swift
@@ -75,7 +75,7 @@ backgroundBlock.main {
 }
 ```
 
-##### 1.3 并发耗时操作*
+#### 1.3 并发耗时操作*
 
 每一段子任务独立，所有子任务完成后回调主线程：
 ```Swift
@@ -97,7 +97,7 @@ Async.main {
 }
 ```
 
-##### 2.延时执行
+#### 2.延时执行
 
 延时一段时间后执行代码，一般见于打开 App 一段时间后，弹出求好评对话框。
 ```Swift
@@ -112,7 +112,7 @@ Async.main(after: seconds) {
 其他用法请见 Demo。
 
 ----
-### ⚖ 协议
+## ⚖ 协议
 
 ```
 MIT License
