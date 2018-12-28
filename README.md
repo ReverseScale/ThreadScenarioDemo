@@ -11,14 +11,14 @@ Use Async to help you solve common threading issues 🤖
 > This kind of threading is not used so often, but it is very microscopic, and it examines the basic skills of the computer.
 
 ----
-### 🤖 Requirements
+## 🤖 Requirements
 
 * iOS 9.0+
 * Xcode 9.0+
 * Swift 4
 
 ----
-### 🎨 Why test the UI?
+## 🎨 Why test the UI?
 
 |1.Presentation page | 2.Presentation page | 3.Presentation page |
 | ------------- | ------------- | ------------- | 
@@ -26,9 +26,9 @@ Use Async to help you solve common threading issues 🤖
 | Common Scene Lists | Time-Sample Operation Scenario Examples | Black Technology Operation Scenarios Example |
 
 ----
-### 🎯 Installation
+## 🎯 Installation
 
-#### Install
+### Install
 
 In *iOS*, you need to add in Podfile.
 ```
@@ -40,11 +40,11 @@ pod 'AsyncSwift'
 ```
 
 ----
-### 🛠 Configuration
+## 🛠 Configuration
 
-#### Create a form
+### Create a form
 
-##### 1. Time-consuming operation
+#### 1. Time-consuming operation
 
 This is the most widely used scenario. To avoid blocking the main thread, the time-consuming operation is handled by the child thread, and then the processing result is used in the main thread. For example, reading some of the data in the sandbox, and then displaying the read data in the UI, this scene has several subdivisions:
 
@@ -58,7 +58,7 @@ print("A: This is run on the \(qos_class_self().description) (expected \(QOS_CLA
 }
 ```
 
-1.2 Serial Time-consuming Operation*
+1.2 Serial Time-consuming Operation
 
 Each sub-task depends on the last task completed, and it will call back the main thread after it completes:
 ```Swift
@@ -75,7 +75,7 @@ backgroundBlock.main {
 }
 ```
 
-1.3 Concurrency and Time-consuming Operations*
+1.3 Concurrency and Time-consuming Operations
 
 Each subtask is independent, and the main thread is called back after all subtasks are completed:
 ```Swift
@@ -97,7 +97,7 @@ Async.main {
 }
 ```
 
-##### 2. Delayed execution
+#### 2. Delayed execution
 
 Execution of code after a period of delay, generally found after opening the App for a period of time, pop-up praise dialog.
 ```Swift
@@ -111,34 +111,7 @@ Async.main(after: seconds) {
 
 For other usages, see Demo.
 
-----
-### ⚖ License
-
-```
-MIT License
-
-Copyright (c) 2017 ReverseScale
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
-### 😬 Contributions
+## 😬 Contributions
 * WeChat : WhatsXie
 * Email : ReverseScale@iCloud.com
 * Blog : https://reversescale.github.io
