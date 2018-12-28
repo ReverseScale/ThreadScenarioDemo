@@ -44,9 +44,10 @@ pod 'AsyncSwift'
 
 #### Create a form
 
-*1. Time-consuming operation*
+##### 1. Time-consuming operation
 
 This is the most widely used scenario. To avoid blocking the main thread, the time-consuming operation is handled by the child thread, and then the processing result is used in the main thread. For example, reading some of the data in the sandbox, and then displaying the read data in the UI, this scene has several subdivisions:
+
 *1.1 Callback to main thread after performing a time-consuming operation
 ```Swift
 Async.background {
@@ -56,6 +57,7 @@ print("A: This is run on the \(qos_class_self().description) (expected \(QOS_CLA
     print("B: This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
 }
 ```
+
 *1.2 Serial Time-consuming Operation*
 
 Each sub-task depends on the last task completed, and it will call back the main thread after it completes:
@@ -72,6 +74,7 @@ backgroundBlock.main {
     print("This is run on the \(qos_class_self().description) (expected \(qos_class_main().description)), after the previous block")
 }
 ```
+
 *1.3 Concurrency and Time-consuming Operations*
 
 Each subtask is independent, and the main thread is called back after all subtasks are completed:
@@ -94,7 +97,7 @@ Async.main {
 }
 ```
 
-2. Delayed execution
+##### 2. Delayed execution
 
 Execution of code after a period of delay, generally found after opening the App for a period of time, pop-up praise dialog.
 ```Swift
