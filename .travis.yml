@@ -1,2 +1,2 @@
 language: swift
-xcode_project: CGDDemoSwift.xcworkspace
+xcode_xcworkspace: CGDDemoSwift.xcworkspace
