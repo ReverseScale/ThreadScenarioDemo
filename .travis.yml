@@ -1,15 +1,16 @@
-osx_image: xcode9
+osx_image: xcode10
 language: objective-c
 
 env:
   global:
     - LANG=en_US.UTF-8
     - LC_ALL=en_US.UTF-8
-    - XCODE_PROJECT=core/EFResume.xcodeproj
+    - XCODE_PROJECT=CGDDemoSwift.xcworkspace
   matrix:
-    - SCHEME="EFResume"
+    - SCHEME="CGDDemoSwift"
 
 before_install:
+  # 在 before_install 步骤中，您可以安装项目所需的其他依赖项，如 Ubuntu 包或自定义服务
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
@@ -17,4 +18,5 @@ script:
   - xcodebuild -project "$XCODE_PROJECT" -scheme "$SCHEME" -configuration Debug clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c
 
 after_success:
+  # 规避 Travis-CI 的 Bug
   - sleep 3
