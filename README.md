@@ -1,6 +1,6 @@
 # ThreadScenarioDemo
 
-![](https://img.shields.io/badge/platform-iOS-red.svg) ![](https://img.shields.io/badge/language-Swift-blue.svg) ![](https://img.shields.io/badge/download-9.9MB-yellow.svg) ![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) 
+![](https://img.shields.io/badge/platform-iOS-red.svg) ![](https://img.shields.io/badge/language-Swift-blue.svg) ![](https://img.shields.io/badge/download-9.9MB-yellow.svg) ![](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) ![](https://www.travis-ci.org/ReverseScale/ThreadScenarioDemo.svg?branch=master)
 
 [EN](https://github.com/ReverseScale/ThreadScenarioDemo) | [中文](https://github.com/ReverseScale/ThreadScenarioDemo/blob/master/README_zh.md)
 
