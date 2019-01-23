@@ -1,2 +1,1 @@
-language: swift
-xcode_xcworkspace: CGDDemoSwift.xcworkspace
+language: objective-c
