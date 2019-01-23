@@ -19,6 +19,7 @@ class TableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 }
+
 extension TableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let scenarioController = ScenarioViewController()
